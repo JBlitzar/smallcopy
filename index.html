@@ -1,0 +1,77 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>JBlitzar's Formatted Text Copier</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        #formatted-text {
+            display: none;
+        }
+    </style>
+
+  
+<link rel="stylesheet" href="/global.css">
+</head>
+<body>
+
+    <h1>Text Formatter and Copier</h1>
+
+    <textarea id="inputText" placeholder="Enter your text here"></textarea>
+
+    <button onclick="copyFormatted(document.getElementById('inputText').value)">Copy Formatted Text</button>
+
+    <div id="formatted-text">
+        <meta charset="utf-8">
+        <meta charset="utf-8">
+        <b style="font-weight:normal;" id="docs-internal-guid-a26db01f-7fff-1d8d-976b-d20d1eeed915">
+            <p dir="ltr" style="line-height:0.072;margin-top:0pt;margin-bottom:0pt;">
+                <span style="font-size:2.25pt;font-family:'Times New Roman',serif;color:#ffffff;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">
+                    Text goes here
+                </span>
+            </p>
+            <br><br>
+        </b>
+    </div>
+
+    <script>
+        function copyFormatted(e) {
+            var t = document.createElement("div");
+            t.innerHTML = `<b style="font-weight:normal;" id="docs-internal-guid-a26db01f-7fff-1d8d-976b-d20d1eeed915">
+                                <p dir="ltr" style="line-height:0.072;margin-top:0pt;margin-bottom:0pt;">
+                                    <span style="font-size:2.25pt;font-family:'Times New Roman',serif;color:#ffffff;background-color:#ffffff;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">
+                                        ${e}
+                                    </span>
+                                </p>
+                                <br><br>
+                            </b>`;
+            t.style.position = "fixed";
+            t.style.pointerEvents = "none";
+            t.style.opacity = 0;
+
+            var o = Array.prototype.slice.call(document.styleSheets).filter(function (e) {
+                return !e.disabled;
+            });
+
+            document.body.appendChild(t);
+            window.getSelection().removeAllRanges();
+
+            var n = document.createRange();
+            n.selectNode(t);
+            window.getSelection().addRange(n);
+
+            document.execCommand("copy");
+
+            for (var l = 0; l < o.length; l++) o[l].disabled = !0;
+            document.execCommand("copy");
+            for (var l = 0; l < o.length; l++) o[l].disabled = !1;
+
+            document.body.removeChild(t);
+        }
+    </script>
+
+
+
+</body></html>
